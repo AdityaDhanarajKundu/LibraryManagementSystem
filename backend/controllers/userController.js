@@ -61,3 +61,43 @@ export async function updateUser(req,res){
     res.status(500).json({message:"Error updating profile",error});
   }
 }
+
+export async function makeAdmin(req,res){
+  const { userId, action } = req.body; // userId to be updated and action: "promote" or "revoke"
+  const { role } = req.user; // Role of the logged-in user (comes from authentication middleware)
+
+  try{
+    if(role !== "admin"){
+      return res.status(403).json({message: "You are not authorized to perform this action"});
+    }
+
+    const user = await User.findByPk(userId);
+    if(!user) return res.status(404).json({message:"User not found"});
+
+    if(action === "promote"){
+      if(user.role === "admin"){
+        return res.status(400).json({message:"User is already an admin"});
+      }
+      user.role = "admin";
+    }else if(action === "revoke"){
+      if(user.role === "user"){
+        return res.status(400).json({message:"User is already a user"});
+      }
+      user.role = "user";
+    }else{
+      return res.status(400).json({message:"Invalid action, must be 'promote' or 'revoke'"});
+    }
+
+    await user.save();
+    return res
+      .status(200)
+      .json({
+        message: "User role updated to '${user.role}' successfully",
+        user,
+      });
+  }catch(error){
+    return res
+      .status(500)
+      .json({ message: "Error updating user role", error: error.message });
+  }
+}
