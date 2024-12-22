@@ -1,11 +1,12 @@
-import Navbar from "./components/Navbar"
+import { AuthProvider } from "./context/AuthContext";
+import AppRouter from "./routes/AppRouter";
 
 function App() {
 
   return (
-    <div>
-      <Navbar />
-    </div>
+    <AuthProvider>
+        <AppRouter />
+    </AuthProvider>
   )
 }
 
