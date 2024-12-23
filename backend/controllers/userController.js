@@ -3,6 +3,9 @@
 import User from "../models/userModel.js";
 import bcrypt from "bcrypt";
 import { generateToken } from "../utils/helper.js";
+import { sendEmail } from "../utils/helper.js";
+import crypto from "crypto";
+import { Op } from "sequelize";
 
 export async function registerUser(req,res){
     const {name,email,password,role} = req.body;
@@ -99,5 +102,72 @@ export async function makeAdmin(req,res){
     return res
       .status(500)
       .json({ message: "Error updating user role", error: error.message });
+  }
+}
+
+export async function forgotPassword(req,res){
+  const {email} = req.body;
+
+  try{
+    const user = await User.findOne({ where: { email } });
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    // Generate reset token
+    const resetToken = crypto.randomBytes(32).toString("hex");
+    user.resetToken = resetToken;
+    user.resetTokenExpiry = Date.now() + 3600000; // 1 hour expiry
+    await user.save();
+
+    // Send reset email
+    const resetLink = `${process.env.FRONTEND_URL}/reset-password?token=${resetToken}`;
+    await sendEmail(
+      user.email,
+      "Password Reset Request",
+      `Here is your password reset token. Please copy and paste the token in reset password page: ${resetToken}`
+    );
+
+    res.status(200).json({ message: "Password reset link sent to your email" });
+  }catch(error){
+    res.status(500).json({ message: "Error processing request", error });
+  }
+}
+
+export async function resetPassword(req, res){
+  const { token, newPassword } = req.body;
+
+  try {
+    console.log("Received token:", token);
+    console.log("Received newPassword:", newPassword);
+
+    // Find user by reset token and check expiry
+    const user = await User.findOne({
+      where: {
+        resetToken: token,
+        resetTokenExpiry: { [Op.gt]: Date.now() }, // Ensure token isn't expired
+      },
+    });
+
+    if (!user) {
+      console.log("Invalid or expired token");
+      return res.status(400).json({ message: "Invalid or expired token" });
+    }
+
+    // Hash the new password
+    const hashedPassword = await bcrypt.hash(newPassword, 10);
+    user.password = hashedPassword;
+    user.resetToken = null; // Clear the reset token
+    user.resetTokenExpiry = null;
+
+    console.log("Saving new password...");
+    await user.save();
+
+    res.status(200).json({ message: "Password reset successfully" });
+  } catch (error) {
+    console.error("Error resetting password:", error);
+    res
+      .status(500)
+      .json({ message: "Error resetting password", error: error.message });
   }
 }
