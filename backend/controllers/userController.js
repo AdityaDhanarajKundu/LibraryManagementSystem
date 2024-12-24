@@ -1,6 +1,8 @@
 // Handles user registration, login, and fetching profile.
 
 import User from "../models/userModel.js";
+import Book from "../models/bookModel.js";
+import Transaction from "../models/transactionModel.js";
 import bcrypt from "bcrypt";
 import { generateToken } from "../utils/helper.js";
 import { sendEmail } from "../utils/helper.js";
@@ -42,6 +44,29 @@ export async function loginUser(req,res){
     catch(error){
         res.status(500).json({message:"Error logging in user",error});
     }
+}
+
+export async function getUser(req,res){
+  const userId  = req.user.id; // Extract userId from the request object (set by authenticateToken)
+  console.log("Received userId:", userId);
+  try {
+    // Fetch user data by userId
+    const user = await User.findByPk(userId);
+
+    // If user not found, return a 404 error
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    // Exclude sensitive information (like password) from the response
+    const { password, ...userData } = user.toJSON();
+
+    // Return all user data
+    return res.status(200).json(userData);
+  } catch (error) {
+    console.error("Error fetching user:", error);
+    return res.status(500).json({ message: "Server error" });
+  }
 }
 
 export async function updateUser(req,res){
@@ -169,5 +194,23 @@ export async function resetPassword(req, res){
     res
       .status(500)
       .json({ message: "Error resetting password", error: error.message });
+  }
+}
+
+export async function dashBoardStats(req,res){
+  try {
+    // Query the database for dynamic counts
+    const totalUsers = await User.count();
+    const totalBooks = await Book.count();
+    const totalTransactions = await Transaction.count();
+
+    res.status(200).json({
+      users: totalUsers,
+      books: totalBooks,
+      transactions: totalTransactions,
+    });
+  } catch (error) {
+    console.error("Error fetching dashboard stats:", error);
+    res.status(500).json({ error: "Failed to fetch dashboard stats" });
   }
 }
