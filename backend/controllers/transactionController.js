@@ -108,3 +108,35 @@ export async function getUserTransactions(req,res){
         res.status(500).json({message:"Error fetching user transactions",error});
     }
 }
+
+export async function getRecentActivities(req, res) {
+  const userId = req.user.id; // Assuming user ID comes from a middleware like auth
+
+  try {
+    const transactions = await Transaction.findAll({
+      where: { userId },
+      include: [
+        { model: Book, attributes: ["title"] },
+      ],
+      order: [["createdAt", "DESC"]], // Order by most recent
+      limit: 5, // Fetch only the latest 5 activities
+    });
+
+    const activities = transactions.map((transaction) => {
+      let icon;
+      if (transaction.action === "borrow") icon = "📘";
+      else if (transaction.action === "return") icon = "🛠️";
+      else icon = "📗"; // Default icon
+
+      return {
+        icon,
+        message: `You ${transaction.action}ed "${transaction.Book.title}" on ${new Date(transaction.createdAt).toLocaleDateString()}.`,
+      };
+    });
+
+    res.status(200).json({ activities });
+  } catch (error) {
+    console.error("Error fetching recent activities:", error);
+    res.status(500).json({ error: "Failed to fetch recent activities" });
+  }
+}
