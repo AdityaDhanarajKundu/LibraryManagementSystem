@@ -14,7 +14,10 @@ export default function Navbar() {
   };
 
   return (
-    <AppBar position="static" sx={{ backgroundColor: "#4A4A4A" }}>
+    <AppBar
+      position="fixed"
+      sx={{ backgroundColor: "#4A4A4A", zIndex: 2, top: 0 }}
+    >
       <Toolbar sx={{ display: "flex", justifyContent: "space-between" }}>
         {/* Logo Section with Image */}
         <Box

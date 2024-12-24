@@ -43,6 +43,8 @@ export default function Dashboard() {
           justifyContent="center"
           alignItems="center"
           height="100vh"
+          marginTop={"70px"}
+          marginLeft={"200px"}
         >
           <CircularProgress />
         </Box>
@@ -71,10 +73,16 @@ export default function Dashboard() {
     ];
 
     return (
-      <Box display="flex" flexDirection="column" height="100vh">
+      <Box
+        display="flex"
+        flexDirection="column"
+        height="100vh"
+        marginTop={"70px"}
+        marginLeft={"200px"}
+      >
         <Navbar /> {/* Include Navbar */}
         <Box display="flex" flex={1}>
-          <Sidebar /> {/* Include Sidebar */}
+          <Sidebar sx={{ zIndex: 1 }} /> {/* Include Sidebar */}
           <Box
             component="main"
             flex={1}
@@ -85,6 +93,7 @@ export default function Dashboard() {
               backgroundRepeat: "no-repeat",
               backgroundPosition: "center",
               position: "relative",
+              
             }}
           >
             {/* Welcome Message */}
@@ -221,10 +230,7 @@ export default function Dashboard() {
                     <Typography variant="h6" mb={2}>
                       Authorization Management
                     </Typography>
-                    <Button
-                      variant="contained"
-                      color="primary"
-                    >
+                    <Button variant="contained" color="primary">
                       Manage Roles
                     </Button>
                   </Card>
@@ -252,7 +258,7 @@ export default function Dashboard() {
             </Grid>
           </Box>
         </Box>
-        <Footer />
+        <Footer sx={{ position: "relative", zIndex: 3 }} />
       </Box>
     );
 }

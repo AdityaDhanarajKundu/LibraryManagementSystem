@@ -6,10 +6,11 @@ export default function Footer() {
       component="footer"
       sx={{
         textAlign: "center",
-        position: "fixed",
         bottom: 0,
         left: 0,
         width: "100%",
+        // position: "fixed",
+        zIndex: 2,
         backgroundColor: "#4A4A4A",
         py: 2,
         boxShadow: "0 -2px 5px rgba(0, 0, 0, 0.1)",
