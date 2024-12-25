@@ -209,10 +209,10 @@ export default function Dashboard() {
                   }}
                 >
                   <Typography variant="h6" mb={2}>
-                    View Transactions
+                    Transactions
                   </Typography>
                   <Button variant="contained" color="primary">
-                    Manage Transactions
+                    View Transactions
                   </Button>
                 </Card>
               </Grid>

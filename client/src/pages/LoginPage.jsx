@@ -153,7 +153,7 @@ export default function LoginPage(){
               <p style={{ marginTop: "20px", fontSize: "14px", color: "#777" }}>
                 Don't have an account?{" "}
                 <a
-                  href="users/register"
+                  href="/users/register"
                   style={{ color: "#4A4A4A", textDecoration: "underline" }}
                 >
                   Register here
