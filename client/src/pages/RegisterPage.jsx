@@ -18,17 +18,29 @@ export default function RegisterPage(){
     const [name, setName] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
-    const [role, setRole] = useState("user"); // Default role is "user"
+    const [confirmPassword, setConfirmPassword] = useState("");
+    const [error, setError] = useState("");
     const navigate = useNavigate();
 
     const handleSubmit = async (e) => {
-        e.preventDefault();
-        try{
-            await api.post("/users/register", {name, email, password, role});
-            navigate("/users/login");
-        }catch(error){
-            console.error("Registration failed", error);
-        }
+      e.preventDefault();
+
+      const trimmedPassword = password.trim();
+      const trimmedConfirmPassword = confirmPassword.trim();
+
+      if (trimmedPassword !== trimmedConfirmPassword) {
+        setError("Passwords do not match");
+        return;
+      }
+
+      setError(""); // Clear any previous errors
+
+      try {
+        await api.post("/users/register", { name, email, password });
+        navigate("/users/login");
+      } catch (error) {
+        console.error("Registration failed", error);
+      }
     };
 
     return (
@@ -55,7 +67,12 @@ export default function RegisterPage(){
         >
           <Typography
             variant="h3"
-            sx={{ fontWeight: "bold", marginBottom: "20px", color: "white", marginLeft: "20px"}}
+            sx={{
+              fontWeight: "bold",
+              marginBottom: "20px",
+              color: "white",
+              marginLeft: "20px",
+            }}
           >
             The best offer for your business
           </Typography>
@@ -129,23 +146,25 @@ export default function RegisterPage(){
               sx={{ marginBottom: "20px" }}
             />
 
-            {/* Role Radio Buttons */}
-            <Typography variant="body1" sx={{ marginBottom: "10px" }}>
-              Select Role:
-            </Typography>
-            <RadioGroup
-              row
-              value={role}
-              onChange={(e) => setRole(e.target.value)}
-              sx={{ marginBottom: "20px", justifyContent: "center" }}
-            >
-              <FormControlLabel value="user" control={<Radio />} label="User" />
-              <FormControlLabel
-                value="admin"
-                control={<Radio />}
-                label="Admin"
-              />
-            </RadioGroup>
+            <TextField
+              fullWidth
+              label="Confirm Password"
+              type="password"
+              variant="outlined"
+              value={confirmPassword}
+              onChange={(e) => setConfirmPassword(e.target.value)}
+              sx={{ marginBottom: "20px" }}
+            />
+
+            {error && (
+              <Typography
+                variant="body2"
+                color="error"
+                sx={{ marginBottom: "20px" }}
+              >
+                {error}
+              </Typography>
+            )}
 
             {/* Submit Button */}
             <Button
