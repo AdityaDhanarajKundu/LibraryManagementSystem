@@ -4,9 +4,6 @@ import api from "../services/api";
 import {
   TextField,
   Button,
-  FormControlLabel,
-  Radio,
-  RadioGroup,
   Typography,
   Box,
   Card,
