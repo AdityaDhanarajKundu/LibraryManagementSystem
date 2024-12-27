@@ -1,6 +1,7 @@
 // Handles CRUD operations for books.
 
 import Book from "../models/bookModel.js";
+import Transaction from "../models/transactionModel.js";
 import sequelize from "../config/database.js";
 import { Op } from "sequelize";
 
@@ -40,6 +41,7 @@ export async function getBookById(req, res) {
 }
 
 export async function getBooksByGenre(req, res) {
+  
   try {
     const genres = await Book.findAll({
       attributes: [
@@ -70,6 +72,35 @@ export async function getBooksByGenre(req, res) {
     res.status(500).json({ message: "Error categorizing books", error });
   }
 }
+
+export async function getBorrowedBooksByUser(req, res) {
+  console.log("getBorrowedBooksByUser function called");
+  const userId = req.user?.id;
+  if (!userId) {
+    return res.status(401).json({ error: "User not authenticated" });
+  }
+
+  try {
+    const borrowedBooks = await Transaction.findAll({
+      where: {
+        userId,
+        action: "borrow",
+        returnDate: null,
+      },
+      attributes: ["bookId"],
+    });
+
+    console.log("Borrowed Books Query Result:", borrowedBooks); // Debug log
+
+    res
+      .status(200)
+      .json({ borrowedBookIds: borrowedBooks.map((b) => b.bookId) });
+  } catch (error) {
+    console.error("Error fetching borrowed books:", error);
+    res.status(500).json({ error: "Failed to fetch borrowed books" });
+  }
+}
+
 
 export async function addBook(req, res) {
   console.log("Request body:", req.body);
