@@ -82,7 +82,7 @@ export default function Dashboard() {
       >
         <Navbar /> {/* Include Navbar */}
         <Box display="flex" flex={1}>
-          <Sidebar sx={{ zIndex: 1 }} /> {/* Include Sidebar */}
+          <Sidebar sx={{ zIndex: 1 }} />
           <Box
             component="main"
             flex={1}
