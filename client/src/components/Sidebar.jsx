@@ -25,7 +25,7 @@ export default function Sidebar() {
           <ListItem disablePadding sx={{ marginBottom: "10px" }}>
             <ListItemButton
               component={Link}
-              to="/"
+              to="/dashboard"
               sx={{ borderRadius: "8px" }}
             >
               <ListItemIcon>
