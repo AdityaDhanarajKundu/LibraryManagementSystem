@@ -8,6 +8,7 @@ const Book = sequelize.define("Book", {
   title: { type: DataTypes.STRING, allowNull: false },
   author: { type: DataTypes.STRING, allowNull: false },
   genre: { type: DataTypes.STRING },
+  description: { type: DataTypes.STRING },
   quantity: { type: DataTypes.INTEGER, allowNull: false, defaultValue: 1 },
   status: {
     type: DataTypes.ENUM("available", "borrowed"),
