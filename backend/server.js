@@ -7,8 +7,11 @@ import { defineAssociations } from "./models/associations.js";
 
 const port = process.env.PORT || 5000;
 
-sequelize.sync({alter: true}).then(()=>{
+sequelize
+  .sync({ force: false })
+  .then(() => {
     console.log("Database synced successfully");
     defineAssociations();
     app.listen(port, () => console.log(`Server running on port ${port}`));
-}).catch((error) => console.error("Error syncing database:", error));
+  })
+  .catch((error) => console.error("Error syncing database:", error));
