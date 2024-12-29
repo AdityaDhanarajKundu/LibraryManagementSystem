@@ -20,7 +20,6 @@ import api from "../services/api";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import BackgroundImage from "../assets/homebg.jpg";
-import { Document, Page } from "react-pdf";
 import { pdfjs } from "react-pdf";
 
 pdfjs.GlobalWorkerOptions.workerSrc = new URL(
@@ -105,6 +104,7 @@ export default function BookDetails() {
       const { data } = await api.get(`/files/download/${id}`, {
         responseType: "blob",
       });
+      console.log(data);
       const url = window.URL.createObjectURL(data);
       setPdfUrl(url); // Set the PDF blob URL
       setOpenPdf(true); // Open the modal to display PDF
@@ -306,11 +306,16 @@ export default function BookDetails() {
       {/* PDF Modal */}
       <Dialog open={openPdf} onClose={closePdf} maxWidth="lg" fullWidth>
         <DialogTitle>Read Book</DialogTitle>
-        <DialogContent>
+        <DialogContent sx={{ padding: 0 }}>
           {pdfUrl && (
-            <Document file={pdfUrl}>
-              <Page pageNumber={1} />
-            </Document>
+            <iframe
+              src={pdfUrl}
+              style={{
+                width: "100%",
+                height: "calc(100vh - 150px)", // Adjust height for modal title and actions
+                border: "none",
+              }}
+            />
           )}
         </DialogContent>
         <DialogActions>
