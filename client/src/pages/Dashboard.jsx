@@ -5,6 +5,7 @@ import BackgroundImage from "../assets/homebg.jpg";
 import React,{ useState, useEffect } from "react";
 import {Box, Grid, Card, CardContent, Typography, Button, CircularProgress} from "@mui/material"; 
 import {People, Book, SwapHoriz} from "@mui/icons-material";
+import { useNavigate } from "react-router-dom";
 import api from "../services/api";
 
 export default function Dashboard() {
@@ -12,6 +13,7 @@ export default function Dashboard() {
     const [activities, setActivities] = useState([]);
     const [userData, setUserData] = useState(null); // Change state to store all user data
     const [loading, setLoading] = useState(true);
+    const navigate = useNavigate();
 
     useEffect(()=>{
       const fetchDashboardData = async () =>{
@@ -93,7 +95,6 @@ export default function Dashboard() {
               backgroundRepeat: "no-repeat",
               backgroundPosition: "center",
               position: "relative",
-              
             }}
           >
             {/* Welcome Message */}
@@ -179,7 +180,7 @@ export default function Dashboard() {
             </Box>
 
             {/* Quick Actions */}
-            <Grid container spacing={3}>
+            <Grid container spacing={3} mb={14}>
               <Grid item xs={12} sm={4}>
                 <Card
                   sx={{
@@ -193,7 +194,11 @@ export default function Dashboard() {
                   <Typography variant="h6" mb={2}>
                     Borrow a Book
                   </Typography>
-                  <Button variant="contained" color="primary">
+                  <Button
+                    variant="contained"
+                    color="primary"
+                    onClick={() => navigate("/books")}
+                  >
                     Browse Books
                   </Button>
                 </Card>
@@ -211,16 +216,26 @@ export default function Dashboard() {
                   <Typography variant="h6" mb={2}>
                     Transactions
                   </Typography>
-                  <Button variant="contained" color="primary">
+                  <Button
+                    variant="contained"
+                    color="primary"
+                    onClick={() => {
+                      if (userData?.role === "admin") {
+                        navigate("/transactions");
+                      } else {
+                        navigate("/user-transactions");
+                      }
+                    }}
+                  >
                     View Transactions
                   </Button>
                 </Card>
               </Grid>
-              {userData?.role === "admin" && ( // Only display for admin users
+              {userData?.role === "admin" && (
                 <Grid item xs={12} sm={4}>
                   <Card
                     sx={{
-                      backgroundColor: "rgba(255, 255, 255, 0.9)", // Translucent white
+                      backgroundColor: "rgba(255, 255, 255, 0.9)",
                       borderRadius: "10px",
                       boxShadow: "0 4px 10px rgba(0, 0, 0, 0.1)",
                       textAlign: "center",
@@ -230,8 +245,87 @@ export default function Dashboard() {
                     <Typography variant="h6" mb={2}>
                       Authorization Management
                     </Typography>
-                    <Button variant="contained" color="primary">
+                    <Button
+                      variant="contained"
+                      color="primary"
+                      onClick={() => navigate("/manage-roles")}
+                    >
                       Manage Roles
+                    </Button>
+                  </Card>
+                </Grid>
+              )}
+
+              {userData?.role === "admin" && (
+                <Grid item xs={12} sm={4}>
+                  <Card
+                    sx={{
+                      backgroundColor: "rgba(255, 255, 255, 0.9)",
+                      borderRadius: "10px",
+                      boxShadow: "0 4px 10px rgba(0, 0, 0, 0.1)",
+                      textAlign: "center",
+                      p: 3,
+                    }}
+                  >
+                    <Typography variant="h6" mb={2}>
+                      See Users Database
+                    </Typography>
+                    <Button
+                      variant="contained"
+                      color="primary"
+                      onClick={() => navigate("/users-list")}
+                    >
+                      Users List
+                    </Button>
+                  </Card>
+                </Grid>
+              )}
+
+              {userData?.role === "admin" && (
+                <Grid item xs={12} sm={4}>
+                  <Card
+                    sx={{
+                      backgroundColor: "rgba(255, 255, 255, 0.9)",
+                      borderRadius: "10px",
+                      boxShadow: "0 4px 10px rgba(0, 0, 0, 0.1)",
+                      textAlign: "center",
+                      p: 3,
+                    }}
+                  >
+                    <Typography variant="h6" mb={2}>
+                      See Books Database
+                    </Typography>
+                    <Button
+                      variant="contained"
+                      color="primary"
+                      onClick={() => navigate("/booksdb")}
+                    >
+                      See Books List
+                    </Button>
+                  </Card>
+                </Grid>
+              )}
+
+              {userData?.role === "admin" && (
+                <Grid item xs={12} sm={4}>
+                  <Card
+                    sx={{
+                      backgroundColor: "rgba(255, 255, 255, 0.9)",
+                      borderRadius: "10px",
+                      boxShadow: "0 4px 10px rgba(0, 0, 0, 0.1)",
+                      textAlign: "center",
+                      p: 3,
+                    }}
+                  >
+                    <Typography variant="h6" mb={2}>
+                      Edit Existing Books
+                    </Typography>
+                    <Button
+                      variant="contained"
+                      color="primary"
+                      onClick={() => navigate("/edit-books")}
+                    >
+                      Manage Book
                     </Button>
                   </Card>
                 </Grid>
@@ -250,7 +344,11 @@ export default function Dashboard() {
                   <Typography variant="h6" mb={2}>
                     Update Profile
                   </Typography>
-                  <Button variant="contained" color="primary">
+                  <Button
+                    variant="contained"
+                    color="primary"
+                    onClick={() => navigate("/update-profile")}
+                  >
                     Edit Profile
                   </Button>
                 </Card>
