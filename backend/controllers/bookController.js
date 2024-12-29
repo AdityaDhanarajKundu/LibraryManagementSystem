@@ -132,3 +132,44 @@ export async function addBook(req, res) {
     res.status(500).json({ message: "Error adding book", error });
   }
 }
+
+export async function updateBook(req, res) {
+  const bookId  = req.params.id;
+  const { title, author, genre, description, status } = req.body;
+  const quantity = req.body.quantity ? parseInt(req.body.quantity, 10) : undefined;
+  const filePath = req.files?.file?.[0]?.path || null;
+  const thumbnailPath = req.files?.thumbnail?.[0]?.path || null;
+
+  if(!bookId) return res.status(400).json({message:"Book id is required"})
+  
+  try{
+    const book = await Book.findByPk(bookId);
+
+    if (!book) {
+      return res.status(404).json({ message: "Book not found" });
+    }
+
+    //Updated book fields
+    const updatedFields = {
+      ...(title && { title }),
+      ...(author && { author }),
+      ...(genre && { genre }),
+      ...(description && { description }),
+      ...(quantity !== undefined && { quantity }), // Update only if provided
+      ...(status && { status }),
+      ...(filePath && { filePath }),
+      ...(thumbnailPath && { thumbnailPath }),
+    };
+
+    // Update the book with the new data
+    const updatedBook = await book.update(updatedFields);
+
+    res.status(200).json({
+      message: "Book updated successfully",
+      book: updatedBook,
+    });
+  }catch(error){
+    console.error("Error updating book:", error);
+    res.status(500).json({ message: "Error updating book", error });
+  }
+}
