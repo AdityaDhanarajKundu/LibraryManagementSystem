@@ -10,17 +10,19 @@ import {
   IconButton,
   Button,
   Dialog,
-  DialogActions,
   DialogContent,
   DialogTitle,
 } from "@mui/material";
 import { ArrowBack as ArrowBackIcon } from "@mui/icons-material";
+import CloseIcon from "@mui/icons-material/Close";
 import { Link } from "react-router-dom";
 import api from "../services/api";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import BackgroundImage from "../assets/homebg.jpg";
 import { pdfjs } from "react-pdf";
+import { red } from "@mui/material/colors";
+import { useAuth } from "../hooks/useAuth";
 
 pdfjs.GlobalWorkerOptions.workerSrc = new URL(
   "pdfjs-dist/build/pdf.worker.min.mjs",
@@ -28,6 +30,7 @@ pdfjs.GlobalWorkerOptions.workerSrc = new URL(
 ).toString();
 
 export default function BookDetails() {
+  const { user } = useAuth();
   const { id } = useParams();
   const [book, setBook] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -294,6 +297,16 @@ export default function BookDetails() {
                     Read Online
                   </Button>
                 )}
+                {user?.role === "admin" && (
+                  <Button
+                    variant="contained"
+                    color="primary"
+                    component={Link}
+                    to={`/books/edit/${id}`}
+                  >
+                    Edit Book
+                  </Button>
+                )}
               </Box>
             </CardContent>
           </Box>
@@ -305,7 +318,27 @@ export default function BookDetails() {
 
       {/* PDF Modal */}
       <Dialog open={openPdf} onClose={closePdf} maxWidth="lg" fullWidth>
-        <DialogTitle>Read Book</DialogTitle>
+        <DialogTitle
+          sx={{
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
+          }}
+        >
+          Read Book
+          <IconButton
+            aria-label="close"
+            onClick={closePdf}
+            sx={{
+              position: "absolute",
+              right: 8,
+              top: 8,
+              color: red,
+            }}
+          >
+            <CloseIcon sx={{ color: red, right: 12 }} />
+          </IconButton>
+        </DialogTitle>
         <DialogContent sx={{ padding: 0 }}>
           {pdfUrl && (
             <iframe
@@ -318,11 +351,6 @@ export default function BookDetails() {
             />
           )}
         </DialogContent>
-        <DialogActions>
-          <Button onClick={closePdf} color="primary">
-            Close
-          </Button>
-        </DialogActions>
       </Dialog>
     </Box>
   );
