@@ -45,6 +45,7 @@ export async function downloadBook(req, res) {
     const { bookId } = req.params;
     try{
         const book = await Book.findByPk(bookId);
+        console.log(book);
         if(!book || !book.filePath) return res.status(404).json({message: "Book not found"});
 
         res.download(book.filePath);
