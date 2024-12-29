@@ -306,31 +306,6 @@ export default function Dashboard() {
                 </Grid>
               )}
 
-              {userData?.role === "admin" && (
-                <Grid item xs={12} sm={4}>
-                  <Card
-                    sx={{
-                      backgroundColor: "rgba(255, 255, 255, 0.9)",
-                      borderRadius: "10px",
-                      boxShadow: "0 4px 10px rgba(0, 0, 0, 0.1)",
-                      textAlign: "center",
-                      p: 3,
-                    }}
-                  >
-                    <Typography variant="h6" mb={2}>
-                      Edit Existing Books
-                    </Typography>
-                    <Button
-                      variant="contained"
-                      color="primary"
-                      onClick={() => navigate("/edit-books")}
-                    >
-                      Manage Book
-                    </Button>
-                  </Card>
-                </Grid>
-              )}
-
               <Grid item xs={12} sm={4}>
                 <Card
                   sx={{
