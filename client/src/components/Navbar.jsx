@@ -65,7 +65,7 @@ export default function Navbar() {
           {user && user.role === "admin" && (
             <Button
               component={Link}
-              to="/books/add"
+              to="/add-book"
               sx={{
                 color: "#ffffff",
                 textTransform: "none",
