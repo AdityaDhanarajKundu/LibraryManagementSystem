@@ -105,7 +105,7 @@ export async function getBorrowedBooksByUser(req, res) {
 export async function addBook(req, res) {
   console.log("Request body:", req.body);
   console.log("Uploaded files:", req.files);
-  const { title, author, genre, quantity, status } = req.body;
+  const { title, author, genre, description, quantity, status } = req.body;
   const filePath = req.files?.file?.[0]?.path || null;
   const thumbnailPath = req.files?.thumbnail?.[0]?.path || null;
 
@@ -117,6 +117,7 @@ export async function addBook(req, res) {
       title,
       author,
       genre,
+      description,
       quantity: parseInt(quantity, 10),
       status,
       filePath,
