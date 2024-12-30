@@ -79,6 +79,13 @@ export default function AboutUs() {
                     alignItems: "center",
                     boxShadow: 3,
                     textAlign: "center",
+                    transition: "transform 0.3s, box-shadow 0.3s",
+                    "&:hover": {
+                      transform: "translateY(-10px) rotate(5deg)",
+                      boxShadow: "0 15px 30px rgba(0, 0, 0, 0.2)",
+                      cursor: "pointer",
+                    },
+                    borderRadius: "16px", // Rounded corners for a modern look
                   }}
                 >
                   <LibraryBooksIcon
@@ -108,6 +115,13 @@ export default function AboutUs() {
                     alignItems: "center",
                     boxShadow: 3,
                     textAlign: "center",
+                    transition: "transform 0.3s, box-shadow 0.3s",
+                    "&:hover": {
+                      transform: "translateY(-10px) rotate(5deg)",
+                      boxShadow: "0 15px 30px rgba(0, 0, 0, 0.2)",
+                      cursor: "pointer",
+                    },
+                    borderRadius: "16px", // Rounded corners for a modern look
                   }}
                 >
                   <AccessTimeIcon
@@ -137,6 +151,13 @@ export default function AboutUs() {
                     alignItems: "center",
                     boxShadow: 3,
                     textAlign: "center",
+                    transition: "transform 0.3s, box-shadow 0.3s",
+                    "&:hover": {
+                      transform: "translateY(-10px) rotate(5deg)",
+                      boxShadow: "0 15px 30px rgba(0, 0, 0, 0.2)",
+                      cursor: "pointer",
+                    },
+                    borderRadius: "16px", // Rounded corners for a modern look
                   }}
                 >
                   <PeopleIcon
