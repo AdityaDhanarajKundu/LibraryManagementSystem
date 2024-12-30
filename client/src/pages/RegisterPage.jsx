@@ -68,19 +68,18 @@ export default function RegisterPage(){
               fontWeight: "bold",
               marginBottom: "20px",
               color: "white",
-              marginLeft: "20px",
             }}
           >
-            The best offer for your business
+            Start Your Reading Journey with Nerdy Archive
           </Typography>
           <Typography
             variant="body1"
             sx={{ fontSize: "1.2rem", lineHeight: "1.8" }}
           >
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Temporibus,
-            expedita justo veniam atque, magni tempora mollitia dolorum
-            consequatur nulla, neque debitis eos reprehenderit quasi ab ipsum
-            nisi dolorem modi. Quos?
+            <br />
+            Sign up today and enjoy unlimited access to a vast library, tailored
+            to fit your reading preferences and learning goals. Let your journey
+            begin with <strong>Nerdy Archive!</strong>
           </Typography>
         </Box>
 
