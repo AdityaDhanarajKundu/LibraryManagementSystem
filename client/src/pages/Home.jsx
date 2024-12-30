@@ -95,7 +95,17 @@ const Home = () => {
         <Stack spacing={4}>
           <Grid container spacing={4}>
             <Grid item xs={12} sm={6} md={4}>
-              <Card>
+              <Card
+                sx={{
+                  transition: "transform 0.3s, box-shadow 0.3s",
+                  "&:hover": {
+                    transform: "translateY(-10px) rotate(5deg)",
+                    boxShadow: "0 15px 30px rgba(0, 0, 0, 0.2)",
+                    cursor: "pointer",
+                  },
+                  borderRadius: "16px", // Rounded corners for a modern look
+                }}
+              >
                 <CardMedia
                   component="img"
                   alt="Library"
@@ -118,7 +128,17 @@ const Home = () => {
               </Card>
             </Grid>
             <Grid item xs={12} sm={6} md={4}>
-              <Card>
+              <Card
+                sx={{
+                  transition: "transform 0.3s, box-shadow 0.3s",
+                  "&:hover": {
+                    transform: "translateY(-10px) rotate(5deg)",
+                    boxShadow: "0 15px 30px rgba(0, 0, 0, 0.2)",
+                    cursor: "pointer",
+                  },
+                  borderRadius: "16px", // Rounded corners for a modern look
+                }}
+              >
                 <CardMedia
                   component="img"
                   alt="Trending"
@@ -141,7 +161,17 @@ const Home = () => {
               </Card>
             </Grid>
             <Grid item xs={12} sm={6} md={4}>
-              <Card>
+              <Card
+                sx={{
+                  transition: "transform 0.3s, box-shadow 0.3s",
+                  "&:hover": {
+                    transform: "translateY(-10px) rotate(5deg)",
+                    boxShadow: "0 15px 30px rgba(0, 0, 0, 0.2)",
+                    cursor: "pointer",
+                  },
+                  borderRadius: "16px", // Rounded corners for a modern look
+                }}
+              >
                 <CardMedia
                   component="img"
                   alt="Users"
@@ -227,7 +257,12 @@ const Home = () => {
                 Join Nerdy Archive and dive into a world of unlimited knowledge
                 and books.
               </Typography>
-              <Button variant="outlined" color="inherit" size="large" onClick={()=> navigate("/users/register")}>
+              <Button
+                variant="outlined"
+                color="inherit"
+                size="large"
+                onClick={() => navigate("/users/register")}
+              >
                 Get Started
               </Button>
             </>

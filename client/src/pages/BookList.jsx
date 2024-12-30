@@ -261,7 +261,16 @@ const filteredBooks = books.filter((book) => {
           <Grid container spacing={3} sx={{ mt: 2 }} pb={"80px"}>
             {filteredBooks.map((book) => (
               <Grid item xs={12} sm={6} md={4} key={book.id}>
-                <Card>
+                <Card
+                  sx={{
+                    transition: "transform 0.3s ease, box-shadow 0.3s ease",
+                    "&:hover": {
+                      transform: "scale(1.05)", // Lifts and enlarges the card slightly
+                      boxShadow: "0 15px 30px rgba(0, 0, 0, 0.2)", // Soft shadow for a 3D lift effect
+                    },
+                    borderRadius: "16px", // Rounded corners for a modern look
+                  }}
+                >
                   <CardMedia
                     component="img"
                     height="200"
