@@ -15,7 +15,7 @@ import {
   CircularProgress,
 } from "@mui/material";
 import {useAuth} from "../hooks/useAuth";
-import { Navigate } from "react-router-dom";
+import { Navigate, useNavigate } from "react-router-dom";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import BackgroundImage from "../assets/homebg.jpg";
@@ -23,6 +23,7 @@ import api from "../services/api";
 
 export default function AddBook(){
     const{user} = useAuth();
+    const navigate = useNavigate();
 
     const [formData, setFormData] = useState({
       title: "",
@@ -90,6 +91,7 @@ export default function AddBook(){
           });
           setFile(null);
           setThumbnail(null);
+          setTimeout(() => navigate("/books"), 1500);
         } catch (error) {
           setError(error.response?.data?.message || "Failed to add book.");
         } finally {
