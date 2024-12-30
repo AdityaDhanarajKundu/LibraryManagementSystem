@@ -18,6 +18,7 @@ import LibraryBooksIcon from "@mui/icons-material/LibraryBooks";
 import InventoryIcon from "@mui/icons-material/Inventory";
 import ManageAccountsIcon from "@mui/icons-material/ManageAccounts";
 import VerifiedUserIcon from "@mui/icons-material/VerifiedUser";
+import StorageIcon from "@mui/icons-material/Storage";
 import { useNavigate } from "react-router-dom";
 import api from "../services/api";
 
@@ -333,6 +334,48 @@ export default function Dashboard() {
                     onClick={() => navigate("/users")}
                   >
                     Manage Users
+                  </Button>
+                </Card>
+              </Grid>
+            )}
+            {userData?.role === "admin" && (
+              <Grid item xs={12} sm={4}>
+                <Card
+                  sx={{
+                    backgroundColor: "rgba(255, 255, 255, 0.9)",
+                    borderRadius: "15px",
+                    boxShadow: "0 4px 15px rgba(0, 0, 0, 0.1)",
+                    textAlign: "center",
+                    p: 3,
+                    transition: "all 0.3s ease-in-out",
+                    "&:hover": {
+                      transform: "scale(1.05)",
+                    },
+                  }}
+                >
+                  <Box display={"flex"} flexDirection={"row"}>
+                    <StorageIcon
+                      color="error"
+                      sx={{ marginRight: "10px", marginLeft: "48px" }}
+                    />
+                    <Typography variant="h6" mb={2}>
+                      Books Database
+                    </Typography>
+                  </Box>
+                  <Button
+                    variant="contained"
+                    color="primary"
+                    sx={{
+                      borderRadius: "50px",
+                      padding: "12px 25px",
+                      boxShadow: "0 5px 15px rgba(0, 0, 0, 0.15)",
+                      "&:hover": {
+                        boxShadow: "0 6px 18px rgba(0, 0, 0, 0.2)",
+                      },
+                    }}
+                    onClick={() => navigate("/booksdb")}
+                  >
+                    Manage Books
                   </Button>
                 </Card>
               </Grid>
