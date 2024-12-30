@@ -223,7 +223,7 @@ export default function Dashboard() {
                       if (userData?.role === "admin") {
                         navigate("/transactions");
                       } else {
-                        navigate("/user-transactions");
+                        navigate(`/transactions/${userData?.id}`);
                       }
                     }}
                   >

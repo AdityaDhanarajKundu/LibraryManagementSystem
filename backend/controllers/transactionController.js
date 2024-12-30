@@ -140,3 +140,21 @@ export async function getRecentActivities(req, res) {
     res.status(500).json({ error: "Failed to fetch recent activities" });
   }
 }
+
+export async function getAllTransactions(req, res) {
+  try {
+    const transactions = await Transaction.findAll({
+      include: [
+        { model: Book, attributes: ["title", "author"] },
+        { model: User, attributes: ["name", "email"] },
+      ],
+      attributes: ["id", "action", "borrowDate", "returnDate", "fine"],
+      order: [["createdAt", "DESC"]], // Sort by most recent
+    });
+
+    res.status(200).json({ transactions });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ message: "Error fetching all transactions", error });
+  }
+}
