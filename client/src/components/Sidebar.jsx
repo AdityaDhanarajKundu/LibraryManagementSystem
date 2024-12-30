@@ -10,7 +10,7 @@ export default function Sidebar() {
         component="aside"
         sx={{
           width: "160px", // Increased width to accommodate long words
-          backgroundColor: "#3A3A3A",
+          backgroundColor: "#2c85af",
           position: "fixed", // Fix the sidebar
           top: 0,
           left: 0,
@@ -29,9 +29,9 @@ export default function Sidebar() {
               sx={{ borderRadius: "8px" }}
             >
               <ListItemIcon>
-                <DashboardIcon sx={{ color: "#ffffff" }} />
+                <DashboardIcon sx={{ color: "white" }} />
               </ListItemIcon>
-              <ListItemText primary="Dashboard" sx={{ color: "#ffffff" }} />
+              <ListItemText primary="Dashboard" sx={{ color: "white" }} />
             </ListItemButton>
           </ListItem>
 
@@ -43,9 +43,9 @@ export default function Sidebar() {
               sx={{ borderRadius: "8px" }}
             >
               <ListItemIcon>
-                <BookIcon sx={{ color: "#ffffff" }} />
+                <BookIcon sx={{ color: "white" }} />
               </ListItemIcon>
-              <ListItemText primary="Books" sx={{ color: "#ffffff" }} />
+              <ListItemText primary="Books" sx={{ color: "white" }} />
             </ListItemButton>
           </ListItem>
 
@@ -57,9 +57,9 @@ export default function Sidebar() {
               sx={{ borderRadius: "8px" }}
             >
               <ListItemIcon>
-                <PersonIcon sx={{ color: "#ffffff" }} />
+                <PersonIcon sx={{ color: "white" }} />
               </ListItemIcon>
-              <ListItemText primary="Profile" sx={{ color: "#ffffff" }} />
+              <ListItemText primary="Profile" sx={{ color: "white" }} />
             </ListItemButton>
           </ListItem>
         </List>

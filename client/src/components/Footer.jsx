@@ -11,15 +11,19 @@ export default function Footer() {
         width: "100%",
         position: "fixed",
         zIndex: 2,
-        backgroundColor: "#4A4A4A",
+        backgroundColor: "#81d4fa", // Vibrant sky blue background
         py: 2,
         boxShadow: "0 -2px 5px rgba(0, 0, 0, 0.1)",
       }}
     >
-      <Typography variant="body2" color="#ffffff">
+      <Typography variant="body2" color="black">
+        {" "}
+        {/* Dark blue text */}
         &copy; 2024 Nerdy Archive - eBook Library. All rights reserved.
       </Typography>
-      <Typography variant="body2" color="#ffffff">
+      <Typography variant="body2" color="black">
+        {" "}
+        {/* Dark blue text */}
         Made by{" "}
         <Link
           href="https://github.com/AdityaDhanarajKundu"
@@ -29,7 +33,10 @@ export default function Footer() {
             textDecoration: "none",
             fontWeight: "bold",
             fontStyle: "italic",
-            color: "primary.main",
+            color: "black", 
+            ":hover": {
+              color: "#0288d1",
+            },
           }}
         >
           Aditya Dhanaraj Kundu
