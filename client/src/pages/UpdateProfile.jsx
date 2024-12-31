@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState,useEffect } from "react";
 import {
   Box,
   Container,
@@ -30,6 +30,26 @@ export default function UpdateProfile(){
     const [showOldPassword, setShowOldPassword] = useState(false);
     const [showNewPassword, setShowNewPassword] = useState(false);
     const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+
+    useEffect(() => {
+      const fetchUserData = async () => {
+        try{
+          const response = await api.get("/users/getUser");
+          console.log(response);
+          setFormData({
+            name: response.data.name,
+            email: response.data.email,
+            oldPassword: "",
+            newPassword: "",
+            confirmPassword: "",
+          });
+        }catch(error){
+          console.error("Error fetching user data:", error);
+        }
+      }
+      
+      fetchUserData();
+    },[]);
 
     const handleInputChange = (e) => {
       setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -73,14 +93,11 @@ export default function UpdateProfile(){
       <>
         {/* Navbar */}
         <Navbar />
-
         {/* Background Section */}
         <Box
           sx={{
-            backgroundImage: `url(${BackgroundImage})`, // Replace with your background image URL
+            backgroundImage: `url(${BackgroundImage})`,
             backgroundSize: "cover",
-            backgroundPosition: "center",
-            backgroundRepeat: "no-repeat",
             minHeight: "100vh",
             paddingBottom: "50px",
             display: "flex",
@@ -97,29 +114,21 @@ export default function UpdateProfile(){
                 padding: "20px",
                 boxShadow: "0 4px 10px rgba(0, 0, 0, 0.3)",
                 borderRadius: "15px",
-                backgroundColor: "rgba(255, 255, 255)", // Transparent card
+                backgroundColor: "rgba(255, 255, 255)",
               }}
             >
               {/* Profile Icon */}
               <Grid item xs={4} display="flex" justifyContent="center">
-                <Avatar
-                  sx={{
-                    bgcolor: "#3f51b5",
-                    width: 120,
-                    height: 120,
-                  }}
-                >
+                <Avatar sx={{ bgcolor: "#3f51b5", width: 120, height: 120 }}>
                   <AccountCircle sx={{ fontSize: 80 }} />
                 </Avatar>
               </Grid>
-
               {/* Input Fields */}
               <Grid item xs={8}>
                 <CardContent>
                   <Typography variant="h5" align="center" gutterBottom>
                     Update Profile
                   </Typography>
-
                   <form onSubmit={handleSubmit}>
                     <Grid container spacing={2}>
                       <Grid item xs={12}>
@@ -132,7 +141,6 @@ export default function UpdateProfile(){
                           variant="outlined"
                         />
                       </Grid>
-
                       <Grid item xs={12}>
                         <TextField
                           label="Email"
@@ -144,7 +152,6 @@ export default function UpdateProfile(){
                           variant="outlined"
                         />
                       </Grid>
-
                       <Grid item xs={12}>
                         <TextField
                           label="Old Password"
@@ -174,7 +181,6 @@ export default function UpdateProfile(){
                           }}
                         />
                       </Grid>
-
                       <Grid item xs={12}>
                         <TextField
                           label="New Password"
@@ -206,18 +212,17 @@ export default function UpdateProfile(){
                           }}
                         />
                       </Grid>
-
                       <Grid item xs={12}>
                         <TextField
                           label="Confirm New Password"
-                          name="confirmNewPassword"
+                          name="confirmPassword"
                           type={showConfirmPassword ? "text" : "password"}
-                          value={formData.confirmNewPassword}
+                          value={formData.confirmPassword}
                           onChange={handleInputChange}
                           fullWidth
                           variant="outlined"
-                          error={!!errors.confirmNewPassword}
-                          helperText={errors.confirmNewPassword}
+                          error={!!errors.confirmPassword}
+                          helperText={errors.confirmPassword}
                           InputProps={{
                             endAdornment: (
                               <InputAdornment position="end">
@@ -238,7 +243,6 @@ export default function UpdateProfile(){
                           }}
                         />
                       </Grid>
-
                       <Grid item xs={12}>
                         <Button
                           type="submit"
@@ -256,7 +260,6 @@ export default function UpdateProfile(){
             </Card>
           </Container>
         </Box>
-
         {/* Footer */}
         <Footer />
       </>
