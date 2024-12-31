@@ -6,9 +6,6 @@ import fs from "fs";
 
 dotenv.config();
 
-// the aiven ca certificate
-const caCertificate = fs.readFileSync("./certs/ca.pem").toString();
-
 const sequelize = new Sequelize(
   process.env.DB_NAME,
   process.env.DB_USER,
@@ -17,13 +14,6 @@ const sequelize = new Sequelize(
     host: process.env.DB_HOST,
     port: process.env.DB_PORT,
     dialect: "mysql",
-    dialectOptions: {
-      ssl: {
-        require: true,
-        rejectUnauthorized: true,
-        ca: caCertificate, // Ensure only valid certificates are used
-      },
-    },
   }
 );
 
