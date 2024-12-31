@@ -25,6 +25,7 @@ app.get("/api/dashboard", authenticateToken, dashBoardStats);
 app.get("/api/recent-activities", authenticateToken, getRecentActivities);
 // static files serving
 app.use("/uploads", express.static("uploads/books"));
-app.use("/uploads/thumbnails", express.static("uploads/thumbnails"));  
+app.use("/uploads/thumbnails", express.static("uploads/thumbnails"));
+app.use("/", (req,res) => res.json({message: "Welcome to the Library Management System"}));
 
 export default app;
