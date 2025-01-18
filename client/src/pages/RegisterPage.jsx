@@ -1,137 +1,102 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import api from "../services/api";
-import {
-  TextField,
-  Button,
-  Typography,
-  Box,
-  Card,
-} from "@mui/material";
-import RegisterBg from "../assets/registerbg.jpg";
-import Logo from "../assets/logo.png";
+import { TextField, Button, Typography, Box, Card, CardContent } from "@mui/material";
+import { styled } from "@mui/system";
 
-export default function RegisterPage(){
-    const [name, setName] = useState("");
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
-    const [confirmPassword, setConfirmPassword] = useState("");
-    const [error, setError] = useState("");
-    const navigate = useNavigate();
+const RegisterCard = styled(Card)({
+  backgroundColor: "rgba(255, 255, 255, 0.95)",
+  borderRadius: "10px",
+  boxShadow: "0 6px 15px rgba(0, 0, 0, 0.1)",
+  padding: "20px",
+  maxWidth: "500px",
+});
 
-    const handleSubmit = async (e) => {
-      e.preventDefault();
+const SubmitButton = styled(Button)({
+  background: "#4caf50", // Library green
+  color: "#fff",
+  fontWeight: "bold",
+  padding: "10px 0",
+  textTransform: "capitalize",
+  borderRadius: "5px",
+  fontSize: "16px",
+  "&:hover": {
+    background: "#45a049",
+  },
+});
 
-      const trimmedPassword = password.trim();
-      const trimmedConfirmPassword = confirmPassword.trim();
+export default function RegisterPage() {
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [error, setError] = useState("");
+  const navigate = useNavigate();
 
-      if (trimmedPassword !== trimmedConfirmPassword) {
-        setError("Passwords do not match");
-        return;
-      }
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    // Add your form submission logic here
+  };
 
-      setError(""); // Clear any previous errors
-
-      try {
-        await api.post("/users/register", { name, email, password });
-        navigate("/users/login");
-      } catch (error) {
-        console.error("Registration failed", error);
-      }
-    };
-
-    return (
-      <Box
-        sx={{
-          display: "flex",
-          height: "100vh",
-          backgroundImage: `url(${RegisterBg})`,
-          backgroundSize: "cover",
-          backgroundPosition: "center",
-          fontFamily: "'Roboto', sans-serif",
-          alignItems: "center",
-          justifyContent: "center",
-        }}
-      >
-        {/* Left Section with Text Content */}
-        <Box
-          sx={{
-            width: "50%",
-            color: "#fff",
-            padding: "20px",
-            textAlign: "left",
-          }}
-        >
+  return (
+    <Box
+      sx={{
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        height: "100vh",
+        backgroundImage: `url(https://images.unsplash.com/photo-1507842217343-583bb7270b66?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1080)`,
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+        fontFamily: "'Poppins', sans-serif",
+      }}
+    >
+      <RegisterCard>
+        <CardContent>
+          <Box sx={{ textAlign: "center", marginBottom: "20px" }}>
+            <img
+              src="https://img.icons8.com/color/96/000000/open-book.png"
+              alt="Library Icon"
+              style={{ width: "60px" }}
+            />
+          </Box>
           <Typography
-            variant="h3"
+            variant="h4"
             sx={{
               fontWeight: "bold",
-              marginBottom: "20px",
-              color: "white",
+              marginBottom: "15px",
+              color: "#333",
+              textAlign: "center",
             }}
           >
-            Start Your Reading Journey with Nerdy Archive
+            Library Registration
           </Typography>
           <Typography
-            variant="body1"
-            sx={{ fontSize: "1.2rem", lineHeight: "1.8" }}
-          >
-            <br />
-            Sign up today and enjoy unlimited access to a vast library, tailored
-            to fit your reading preferences and learning goals. Let your journey
-            begin with <strong>Nerdy Archive!</strong>
-          </Typography>
-        </Box>
-
-        {/* Right Section with Registration Card */}
-        <Card
-          sx={{
-            width: "400px",
-            padding: "20px",
-            borderRadius: "15px",
-            backgroundColor: "rgba(255, 255, 255, 0.9)",
-            boxShadow: "0 4px 10px rgba(0, 0, 0, 0.1)",
-            textAlign: "center",
-          }}
-        >
-          {/* Logo */}
-          <img
-            src={Logo} // Replace with the actual path to the logo
-            alt="Logo"
-            style={{
-              width: "300px",
-              marginBottom: "20px",
-              borderRadius: "15px",
+            variant="body2"
+            sx={{
+              marginBottom: "30px",
+              color: "#555",
+              textAlign: "center",
             }}
-          />
-
-          <Typography variant="h4" gutterBottom>
-            Register
+          >
+            Join our library today to access a vast collection of books, track your borrow history, and more.
           </Typography>
-
-          <form onSubmit={handleSubmit} style={{ marginTop: "20px" }}>
-            {/* Name Input */}
+          <form onSubmit={handleSubmit}>
             <TextField
               fullWidth
-              label="Name"
+              label="Full Name"
               variant="outlined"
               value={name}
               onChange={(e) => setName(e.target.value)}
               sx={{ marginBottom: "20px" }}
             />
-
-            {/* Email Input */}
             <TextField
               fullWidth
               label="Email"
-              type="email"
               variant="outlined"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               sx={{ marginBottom: "20px" }}
             />
-
-            {/* Password Input */}
             <TextField
               fullWidth
               label="Password"
@@ -141,7 +106,6 @@ export default function RegisterPage(){
               onChange={(e) => setPassword(e.target.value)}
               sx={{ marginBottom: "20px" }}
             />
-
             <TextField
               fullWidth
               label="Confirm Password"
@@ -151,34 +115,21 @@ export default function RegisterPage(){
               onChange={(e) => setConfirmPassword(e.target.value)}
               sx={{ marginBottom: "20px" }}
             />
-
             {error && (
               <Typography
                 variant="body2"
                 color="error"
-                sx={{ marginBottom: "20px" }}
+                sx={{ marginBottom: "20px", textAlign: "center" }}
               >
                 {error}
               </Typography>
             )}
-
-            {/* Submit Button */}
-            <Button
-              type="submit"
-              fullWidth
-              variant="contained"
-              sx={{
-                backgroundColor: "#4A4A4A",
-                color: "#fff",
-                padding: "10px",
-                textTransform: "none",
-                "&:hover": { backgroundColor: "#333" },
-              }}
-            >
-              Sign Up
-            </Button>
+            <SubmitButton fullWidth type="submit">
+              Register
+            </SubmitButton>
           </form>
-        </Card>
-      </Box>
-    );
+        </CardContent>
+      </RegisterCard>
+    </Box>
+  );
 }
