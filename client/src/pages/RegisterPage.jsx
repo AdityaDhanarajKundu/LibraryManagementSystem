@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import api from "../services/api";
+
 import {
   TextField,
   Button,
@@ -8,7 +9,7 @@ import {
   Box,
   Card,
 } from "@mui/material";
-import RegisterBg from "../assets/registerbg.jpg";
+import RegisterBg from "../assets/register.jpg";
 import Logo from "../assets/logo.png";
 
 export default function RegisterPage(){
@@ -102,6 +103,7 @@ export default function RegisterPage(){
               width: "300px",
               marginBottom: "20px",
               borderRadius: "15px",
+              marginLeft: "30px",
             }}
           />
 

@@ -18,7 +18,7 @@ import {useAuth} from "../hooks/useAuth";
 import { Navigate, useNavigate } from "react-router-dom";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
-import BackgroundImage from "../assets/homebg.jpg";
+import BackgroundImage from "../assets/addbook.jpg";
 import api from "../services/api";
 
 export default function AddBook(){

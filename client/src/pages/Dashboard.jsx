@@ -1,7 +1,8 @@
 import Navbar from "../components/Navbar";
 import Sidebar from "../components/Sidebar";
 import Footer from "../components/Footer";
-import BackgroundImage from "../assets/homebg.jpg";
+import BackgroundImage from "../assets/dashboard.jpg";
+import { useAuth } from "../hooks/useAuth";
 import React, { useState, useEffect } from "react";
 import {
   Box,
@@ -28,6 +29,7 @@ export default function Dashboard() {
   const [userData, setUserData] = useState(null);
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
+  const{user,logout}=useAuth();
 
   useEffect(() => {
     const fetchDashboardData = async () => {
@@ -209,6 +211,48 @@ export default function Dashboard() {
 
           {/* Quick Actions */}
           <Grid container spacing={3} mb={14}>
+            {user && user.role === "admin" && (
+               <Grid item xs={12} sm={4}>
+               <Card
+                 sx={{
+                   backgroundColor: "rgba(255, 255, 255, 0.9)",
+                   borderRadius: "15px",
+                   boxShadow: "0 4px 15px rgba(0, 0, 0, 0.1)",
+                   textAlign: "center",
+                   p: 3,
+                   transition: "all 0.3s ease-in-out",
+                   "&:hover": {
+                     transform: "scale(1.05)",
+                   },
+                 }}
+               >
+                 <Box display={"flex"} flexDirection={"row"}>
+                   <LibraryBooksIcon
+                     color="error"
+                     sx={{ marginRight: "10px", marginLeft: "50px" }}
+                   />
+                   <Typography variant="h6" mb={2}>
+                     Add a new Book
+                   </Typography>
+                 </Box>
+                 <Button
+                   variant="contained"
+                   color="primary"
+                   sx={{
+                     borderRadius: "50px",
+                     padding: "12px 25px",
+                     boxShadow: "0 5px 15px rgba(0, 0, 0, 0.15)",
+                     "&:hover": {
+                       boxShadow: "0 6px 18px rgba(0, 0, 0, 0.2)",
+                     },
+                   }}
+                   onClick={() => navigate("/add-book")}
+                 >
+                  Add Book
+                 </Button>
+               </Card>
+             </Grid>
+            )}
             <Grid item xs={12} sm={4}>
               <Card
                 sx={{
