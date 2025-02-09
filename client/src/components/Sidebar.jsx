@@ -1,68 +1,49 @@
-import {Link} from "react-router-dom";
-import{Box, List, ListItem, ListItemButton, ListItemIcon, ListItemText} from "@mui/material";
-import DashboardIcon from '@mui/icons-material/Dashboard';
-import BookIcon from '@mui/icons-material/Book';
-import PersonIcon from '@mui/icons-material/Person';
+import { Link } from "react-router-dom";
+import { useState } from "react";
+import { motion } from "framer-motion"; // For animations
+import { Dashboard, Book, Person } from "@mui/icons-material";
 
 export default function Sidebar() {
-    return (
-      <Box
-        component="aside"
-        sx={{
-          width: "160px", // Increased width to accommodate long words
-          backgroundColor: "#2c85af",
-          position: "fixed", // Fix the sidebar
-          top: 0,
-          left: 0,
-          height: "100vh",
-          boxShadow: "2px 0 5px rgba(0, 0, 0, 0.1)",
-          padding: "20px",
-          marginTop: "64px",
-        }}
+  const [isCollapsed, setIsCollapsed] = useState(false);
+
+  return (
+    <motion.aside
+
+      className={`fixed top-0 left-0 h-screen p-5 shadow-lg backdrop-blur-md bg-blue-900/80 text-white transition-all ${
+        isCollapsed ? "w-20" : "w-55"
+      }`}
+    >
+      {/* Toggle Button */}
+      <button
+        onClick={() => setIsCollapsed(!isCollapsed)}
+        className="absolute top-5 right-4 text-white text-xl"
       >
-        <List>
-          {/* Dashboard Link */}
-          <ListItem disablePadding sx={{ marginBottom: "10px" }}>
-            <ListItemButton
-              component={Link}
-              to="/dashboard"
-              sx={{ borderRadius: "8px" }}
-            >
-              <ListItemIcon>
-                <DashboardIcon sx={{ color: "white" }} />
-              </ListItemIcon>
-              <ListItemText primary="Dashboard" sx={{ color: "white" }} />
-            </ListItemButton>
-          </ListItem>
+        {isCollapsed ? "▶" : "◀"}
+      </button>
 
-          {/* Books Link */}
-          <ListItem disablePadding sx={{ marginBottom: "10px" }}>
-            <ListItemButton
-              component={Link}
-              to="/books"
-              sx={{ borderRadius: "8px" }}
-            >
-              <ListItemIcon>
-                <BookIcon sx={{ color: "white" }} />
-              </ListItemIcon>
-              <ListItemText primary="Books" sx={{ color: "white" }} />
-            </ListItemButton>
-          </ListItem>
+      {/* Sidebar Items (Moved slightly lower) */}
+      <nav className="space-y-6 mt-16"> {/* Adjusted margin-top to 16 */}
+        <SidebarItem to="/dashboard" Icon={Dashboard} label="Dashboard" isCollapsed={isCollapsed} />
+        <SidebarItem to="/books" Icon={Book} label="Books" isCollapsed={isCollapsed} />
+        <SidebarItem to="/profile" Icon={Person} label="Profile" isCollapsed={isCollapsed} />
+      </nav>
+    </motion.aside>
+  );
+}
 
-          {/* Profile Link */}
-          <ListItem disablePadding sx={{ marginBottom: "10px" }}>
-            <ListItemButton
-              component={Link}
-              to="/profile"
-              sx={{ borderRadius: "8px" }}
-            >
-              <ListItemIcon>
-                <PersonIcon sx={{ color: "white" }} />
-              </ListItemIcon>
-              <ListItemText primary="Profile" sx={{ color: "white" }} />
-            </ListItemButton>
-          </ListItem>
-        </List>
-      </Box>
-    );
+function SidebarItem({ to, Icon, label, isCollapsed }) {
+  return (
+    <motion.div
+      whileHover={{ scale: 1.05 }} // Smooth hover effect
+      transition={{ duration: 0.2 }}
+    >
+      <Link
+        to={to}
+        className="flex items-center space-x-4 p-3 rounded-lg transition-colors duration-300 hover:bg-blue-700"
+      >
+        <Icon className="text-white" fontSize="medium" />
+        {!isCollapsed && <span className="text-lg">{label}</span>}
+      </Link>
+    </motion.div>
+  );
 }
