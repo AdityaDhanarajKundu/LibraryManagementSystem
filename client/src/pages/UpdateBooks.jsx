@@ -19,7 +19,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import api from "../services/api";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
-import BackgroundImage from "../assets/homebg.jpg";
+import BackgroundImage from "../assets/updatebook.jpg";
 
 export default function UpdateBook() {
   const { id } = useParams();

@@ -19,7 +19,7 @@ import { Link } from "react-router-dom";
 import api from "../services/api";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
-import BackgroundImage from "../assets/homebg.jpg";
+import BackgroundImage from "../assets/bookdetails.jpg";
 import { pdfjs } from "react-pdf";
 import { red } from "@mui/material/colors";
 import { useAuth } from "../hooks/useAuth";
@@ -172,6 +172,7 @@ export default function BookDetails() {
         backgroundSize: "cover",
         backgroundPosition: "center",
         backgroundRepeat: "no-repeat",
+    
       }}
     >
       {/* Navbar */}

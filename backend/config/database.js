@@ -17,20 +17,20 @@ const sequelize = new Sequelize(
     host: process.env.DB_HOST,
     port: process.env.DB_PORT,
     dialect: "mysql",
-    dialectOptions: {
-      ssl: {
-        require: true,
-        rejectUnauthorized: true,
-        ca: caCertificate, // Ensure only valid certificates are used
-      },
-    },
+    // dialectOptions: {
+    //   ssl: {
+    //     require: false,
+    //     rejectUnauthorized: true,
+    //     ca: caCertificate, // Ensure only valid certificates are used
+    //   },
+    // },
   }
 );
 
 async function connect() {
   try {
     await sequelize.authenticate();
-    console.log("Connected to Aiven MySQL database");
+    console.log("Connected to local MySQL database");
   } catch (err) {
     console.error("Unable to connect to MySQL database", err);
   }

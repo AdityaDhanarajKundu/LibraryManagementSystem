@@ -24,7 +24,7 @@ import {
 } from "@mui/icons-material";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
-import BackgroundImage from "../assets/homebg.jpg";
+import BackgroundImage from "../assets/transac.jpg";
 
 const AllTransactions = () => {
   const [transactions, setTransactions] = useState([]);
@@ -134,13 +134,13 @@ const AllTransactions = () => {
                       {transactions.map((transaction) => (
                         <TableRow key={transaction.id}>
                           <TableCell>{transaction.id}</TableCell>
-                          <TableCell>{transaction.Book.title}</TableCell>
-                          <TableCell>{transaction.User.name}</TableCell>
+                          <TableCell>{transaction.Book ? transaction.Book.title : "N/A"}</TableCell>
+                          <TableCell>{transaction.User ? transaction.User.name : "N/A"}</TableCell>
                           <TableCell>{transaction.action}</TableCell>
                           <TableCell>
-                            {new Date(
-                              transaction.borrowDate
-                            ).toLocaleDateString()}
+                          {transaction.borrowDate
+                              ? new Date(transaction.borrowDate).toLocaleDateString()
+                              : "N/A"}
                           </TableCell>
                           <TableCell>
                             {transaction.returnDate

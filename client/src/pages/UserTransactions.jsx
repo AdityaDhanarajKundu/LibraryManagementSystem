@@ -22,7 +22,7 @@ import NumbersIcon from "@mui/icons-material/Numbers";
 import CurrencyRupeeIcon from "@mui/icons-material/CurrencyRupee";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
-import BackgroundImage from "../assets/homebg.jpg";
+import BackgroundImage from "../assets/usertransc.jpg";
 
 const UserTransactions = () => {
   const { id } = useParams();

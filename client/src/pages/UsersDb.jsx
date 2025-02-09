@@ -22,7 +22,7 @@ import GavelIcon from "@mui/icons-material/Gavel";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import api from "../services/api";
-import BackgroundImage from "../assets/homebg.jpg";
+import BackgroundImage from "../assets/userdb.jpg";
 
 export default function UsersDb() {
   const [users, setUsers] = useState([]);

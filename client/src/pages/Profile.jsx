@@ -12,7 +12,7 @@ import {
 } from "@mui/material";
 import { Email, Person, AccountCircle, Edit } from "@mui/icons-material";
 import api from "../services/api";
-import BackgroundImage from "../assets/homebg.jpg";
+import BackgroundImage from "../assets/profile.jpg";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 

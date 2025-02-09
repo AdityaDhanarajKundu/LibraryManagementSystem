@@ -22,7 +22,7 @@ import api from "../services/api";
 import Navbar from "../components/Navbar";
 import Sidebar from "../components/Sidebar";
 import Footer from "../components/Footer";
-import BackgroundImage from "../assets/homebg.jpg";
+import BackgroundImage from "../assets/booksq.jpg";
 
 export default function BookList() {
   const [books, setBooks] = useState([]);
@@ -194,9 +194,9 @@ const filteredBooks = books.filter((book) => {
                 justifyContent: "center",
               },
               "& .MuiTab-root": {
-                fontSize: "1.2rem", // Increase tab font size
+                fontSize: "1.4rem", // Increase tab font size
                 fontWeight: "bold", // Make text bold
-                color: "white", // White font color
+                color: "WHITE", // White font color
               },
               "& .Mui-selected": {
                 color: "yellow", // Highlight selected tab in yellow
@@ -260,7 +260,7 @@ const filteredBooks = books.filter((book) => {
           {/* Books List */}
           <Grid container spacing={3} sx={{ mt: 2 }} pb={"80px"}>
             {filteredBooks.map((book) => (
-              <Grid item xs={12} sm={6} md={4} key={book.id}>
+              <Grid item xs={12} sm={6} lg={3} md={4} key={book.id}>
                 <Card
                   sx={{
                     transition: "transform 0.3s ease, box-shadow 0.3s ease",
@@ -269,6 +269,7 @@ const filteredBooks = books.filter((book) => {
                       boxShadow: "0 15px 30px rgba(0, 0, 0, 0.2)", // Soft shadow for a 3D lift effect
                     },
                     borderRadius: "16px", // Rounded corners for a modern look
+                    minHeight: "350px"
                   }}
                 >
                   <CardMedia
@@ -283,7 +284,7 @@ const filteredBooks = books.filter((book) => {
                     }
                     alt={book.title}
                   />
-                  <CardContent>
+                  <CardContent sx={{ flexGrow: 1, display: "flex", flexDirection: "column" }}>
                     <Typography variant="h6">{book.title}</Typography>
                     <Typography variant="subtitle1" color="text.secondary">
                       {book.author}

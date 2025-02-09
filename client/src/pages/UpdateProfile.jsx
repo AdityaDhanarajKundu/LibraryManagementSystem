@@ -13,7 +13,7 @@ import {
   Avatar,
 } from "@mui/material";
 import { AccountCircle, Visibility, VisibilityOff } from "@mui/icons-material";
-import BackgroundImage from "../assets/homebg.jpg";
+import BackgroundImage from "../assets/transac.jpg";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import api from "../services/api";
