@@ -1,47 +1,18 @@
-import { Typography, Box, Link } from "@mui/material";
-
+import { Container,Typography } from "@mui/material";
 export default function Footer() {
   return (
-    <Box
-      component="footer"
-      sx={{
-        textAlign: "center",
-        bottom: 0,
-        left: 0,
-        width: "100%",
-        position: "fixed",
-        zIndex: 2,
-        backgroundColor: "#81d4fa", // Vibrant sky blue background
-        py: 2,
-        boxShadow: "0 -2px 5px rgba(0, 0, 0, 0.1)",
-      }}
-    >
-      <Typography variant="body2" color="black">
-        {" "}
-        {/* Dark blue text */}
-        &copy; 2024 Nerdy Archive - eBook Library. All rights reserved.
-      </Typography>
-      <Typography variant="body2" color="black">
-        {" "}
-        {/* Dark blue text */}
-        Made by{" "}
-        <Link
-          href="https://github.com/AdityaDhanarajKundu"
-          target="_blank"
-          rel="noopener noreferrer"
-          sx={{
-            textDecoration: "none",
-            fontWeight: "bold",
-            fontStyle: "italic",
-            color: "black", 
-            ":hover": {
-              color: "#0288d1",
-            },
-          }}
-        >
-          Aditya Dhanaraj Kundu
-        </Link>
-      </Typography>
-    </Box>
+    <footer className="fixed bottom-0 left-0 w-full bg-gradient-to-r from-blue-600 to-blue-800 text-white py-3 px-8 text-center shadow-lg backdrop-blur-lg animate-fadeIn">
+      <div className="flex flex-col sm:flex-row justify-between items-center max-w-14xl mx-auto">
+        {/* Left Side - Brand Name */}
+        <Container>
+          <Typography variant="body2">
+            © {new Date().getFullYear()} Nerdy Archive. All rights reserved.
+          </Typography>
+          <Typography variant="body2" sx={{ mt: 1 }}>
+            Built with ❤️ by <a href="https://github.com/AdityaDhanarajKundu">Aditya Dhanaraj Kundu</a>
+          </Typography>
+        </Container>
+      </div>
+    </footer>
   );
 }

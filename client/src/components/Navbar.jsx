@@ -1,179 +1,79 @@
-import { AppBar, Toolbar, Button, Box } from "@mui/material";
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useAuth } from "../hooks/useAuth";
-import { useNavigate } from "react-router-dom";
+import { motion } from "framer-motion";
 import NavLogo from "../assets/navlogo.png";
 
 export default function Navbar() {
   const { user, logout } = useAuth();
   const navigate = useNavigate();
+  const location = useLocation();
 
   const handleLogout = () => {
     logout();
-    navigate("/users/login");
+    navigate("/"); // Redirect to Home after logout
   };
 
+  // Navigation links
+  const navLinks = [
+    { path: "/", label: "Home", alwaysVisible: true },
+    { path: "/books", label: "Books", alwaysVisible: false }, // Books visible only when logged in
+    { path: "/about-us", label: "About Us", alwaysVisible: true },
+    { path: "/profile", label: "Profile", alwaysVisible: false }, // Only for logged-in users
+  ];
+
   return (
-    <AppBar
-      position="fixed"
-      sx={{ backgroundColor: "#f4f4f4", zIndex: 2, top: 0 }}
+    <motion.nav 
+      initial={{ y: -50, opacity: 0 }} 
+      animate={{ y: 0, opacity: 1 }} 
+      transition={{ duration: 0.5 }}
+      className="fixed top-0 left-0 w-full bg-gradient-to-r from-blue-300 to-blue-500 shadow-2xl z-50"
     >
-      <Toolbar sx={{ display: "flex", justifyContent: "space-between" }}>
-        {/* Logo Section with Image */}
-        {user ? (
-          <Box
-            component={Link}
-            to="/dashboard"
-            sx={{
-              display: "flex",
-              alignItems: "center",
-              textDecoration: "none",
-            }}
-          >
-            <img
-              src={NavLogo}
-              alt="eLibrary Logo"
-              style={{ width: "180px", marginRight: "10px" }}
-            />
-          </Box>
-        ) : (
-          <Box
-            component={Link}
-            to="/"
-            sx={{
-              display: "flex",
-              alignItems: "center",
-              textDecoration: "none",
-            }}
-          >
-            <img
-              src={NavLogo}
-              alt="eLibrary Logo"
-              style={{ width: "180px", marginRight: "10px" }}
-            />
-          </Box>
-        )}
+      <div className="container mx-auto flex items-center justify-between py-3 px-6">
+        {/* Logo */}
+        <motion.div whileHover={{ scale: 1.1 }}>
+          <Link to="/" className="flex items-center">
+            <img src={NavLogo} alt="eLibrary Logo" className="w-40 drop-shadow-xl" />
+          </Link>
+        </motion.div>
 
         {/* Navigation Links */}
-        <Box sx={{ display: "flex", gap: 2 }}>
-          <Button
-            component={Link}
-            to="/"
-            sx={{
-              color: "#333333",
-              textTransform: "none",
-              textDecoration: "none",
-              fontWeight: "medium",
-              ":hover": { color: "#000000" },
-            }}
-          >
-            Home
-          </Button>
-          {user ? (
-            <Button
-              component={Link}
-              to="/books"
-              sx={{
-                color: "#333333",
-                textTransform: "none",
-                textDecoration: "none",
-                fontWeight: "medium",
-                ":hover": { color: "#000000" },
-              }}
-            >
-              Books
-            </Button>
-          ) : (
-            <Button
-              component={Link}
-              onClick={() => alert("Please login to access books")}
-              sx={{
-                color: "#333333",
-                textTransform: "none",
-                textDecoration: "none",
-                fontWeight: "medium",
-                ":hover": { color: "#000000" },
-              }}
-            >
-              Books
-            </Button>
-          )}
-          {user && user.role === "admin" && (
-            <Button
-              component={Link}
-              to="/add-book"
-              sx={{
-                color: "#333333",
-                textTransform: "none",
-                textDecoration: "none",
-                fontWeight: "medium",
-                ":hover": { color: "#000000" },
-              }}
-            >
-              Add Book
-            </Button>
-          )}
-          {user ? (
-            <Button
-              component={Link}
-              to="/profile"
-              sx={{
-                color: "#333333",
-                textTransform: "none",
-                textDecoration: "none",
-                fontWeight: "medium",
-                ":hover": { color: "#000000" },
-              }}
-            >
-              Profile
-            </Button>
-          ) : (
-            <Button
-              component={Link}
-              onClick={() => alert("Please login to access profile")}
-              sx={{
-                color: "#333333",
-                textTransform: "none",
-                textDecoration: "none",
-                fontWeight: "medium",
-                ":hover": { color: "#000000" },
-              }}
-            >
-              Profile
-            </Button>
-          )}
-          <Button
-            component={Link}
-            to="/about-us"
-            sx={{
-              color: "#333333",
-              textTransform: "none",
-              textDecoration: "none",
-              fontWeight: "medium",
-              ":hover": { color: "#000000" },
-            }}
-          >
-            About Us
-          </Button>
-        </Box>
+        <div className="flex-grow flex justify-center space-x-7">
+          {navLinks.map((item, index) => {
+            const isDisabled = !user && !item.alwaysVisible; // Disable non-essential links when logged out
 
-        {/* Logout Button */}
+            return (
+              <motion.div key={index} whileHover={{ scale: isDisabled ? 1 : 1.1 }} whileTap={{ scale: isDisabled ? 1 : 0.9 }}>
+                {user || item.alwaysVisible ? (
+                  <Link 
+                    to={isDisabled ? "#" : item.path} 
+                    className={`relative text-lg font-medium px-4 py-2 rounded-lg transition duration-300 ${
+                      isDisabled
+                        ? "text-gray-400 cursor-not-allowed"
+                        : "hover:bg-blue-300 hover:text-white hover:shadow-xl"
+                    } ${
+                      location.pathname === item.path && !isDisabled ? "bg-blue-500 text-white shadow-md" : "text-white"
+                    }`}
+                  >
+                    {item.label}
+                  </Link>
+                ) : null}
+              </motion.div>
+            );
+          })}
+        </div>
+
+        {/* Logout Button - Right Side */}
         {user && (
-          <Button
+          <motion.button 
+            whileHover={{ scale: 1.1 }} 
+            whileTap={{ scale: 0.9 }}
             onClick={handleLogout}
-            sx={{
-              color: "#ffffff", // White text for good contrast
-              backgroundColor: "#e53935", // Vibrant red
-              textTransform: "none",
-              borderRadius: 2,
-              px: 2,
-              ":hover": { backgroundColor: "#b71c1c" }, // Darker red on hover
-            }}
+            className="bg-red-500 text-white px-4 py-2 rounded-lg text-lg font-semibold transition hover:bg-red-600 hover:shadow-xl"
           >
             Logout
-          </Button>
+          </motion.button>
         )}
-      </Toolbar>
-    </AppBar>
+      </div>
+    </motion.nav>
   );
 }
