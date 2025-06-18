@@ -22,9 +22,9 @@ export default function Navbar() {
   ];
 
   return (
-    <motion.nav 
-      initial={{ y: -50, opacity: 0 }} 
-      animate={{ y: 0, opacity: 1 }} 
+    <motion.nav
+      initial={{ y: -50, opacity: 0 }}
+      animate={{ y: 0, opacity: 1 }}
       transition={{ duration: 0.5 }}
       className="fixed top-0 left-0 w-full bg-gradient-to-r from-blue-300 to-blue-500 shadow-2xl z-50"
     >
@@ -32,7 +32,11 @@ export default function Navbar() {
         {/* Logo */}
         <motion.div whileHover={{ scale: 1.1 }}>
           <Link to="/" className="flex items-center">
-            <img src={NavLogo} alt="eLibrary Logo" className="w-40 drop-shadow-xl" />
+            <img
+              src={NavLogo}
+              alt="eLibrary Logo"
+              className="w-40 drop-shadow-xl"
+            />
           </Link>
         </motion.div>
 
@@ -42,16 +46,22 @@ export default function Navbar() {
             const isDisabled = !user && !item.alwaysVisible; // Disable non-essential links when logged out
 
             return (
-              <motion.div key={index} whileHover={{ scale: isDisabled ? 1 : 1.1 }} whileTap={{ scale: isDisabled ? 1 : 0.9 }}>
+              <motion.div
+                key={index}
+                whileHover={{ scale: isDisabled ? 1 : 1.1 }}
+                whileTap={{ scale: isDisabled ? 1 : 0.9 }}
+              >
                 {user || item.alwaysVisible ? (
-                  <Link 
-                    to={isDisabled ? "#" : item.path} 
+                  <Link
+                    to={isDisabled ? "#" : item.path}
                     className={`relative text-lg font-medium px-4 py-2 rounded-lg transition duration-300 ${
                       isDisabled
                         ? "text-gray-400 cursor-not-allowed"
                         : "hover:bg-blue-300 hover:text-white hover:shadow-xl"
                     } ${
-                      location.pathname === item.path && !isDisabled ? "bg-blue-500 text-white shadow-md" : "text-white"
+                      location.pathname === item.path && !isDisabled
+                        ? "bg-blue-500 text-white shadow-md"
+                        : "text-white"
                     }`}
                   >
                     {item.label}
@@ -60,12 +70,27 @@ export default function Navbar() {
               </motion.div>
             );
           })}
+
+          {user && user.role === "admin" && (
+            <motion.div whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.9 }}>
+              <Link
+                to="/add-book"
+                className={`relative text-lg font-medium px-4 py-2 rounded-lg transition duration-300 ${
+                  location.pathname === "/books/add"
+                    ? "bg-blue-500 text-white shadow-md"
+                    : "text-white hover:bg-blue-300 hover:text-white hover:shadow-xl"
+                }`}
+              >
+                Add Book
+              </Link>
+            </motion.div>
+          )}
         </div>
 
         {/* Logout Button - Right Side */}
         {user && (
-          <motion.button 
-            whileHover={{ scale: 1.1 }} 
+          <motion.button
+            whileHover={{ scale: 1.1 }}
             whileTap={{ scale: 0.9 }}
             onClick={handleLogout}
             className="bg-red-500 text-white px-4 py-2 rounded-lg text-lg font-semibold transition hover:bg-red-600 hover:shadow-xl"

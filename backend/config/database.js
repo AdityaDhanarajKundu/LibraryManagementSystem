@@ -9,23 +9,10 @@ dotenv.config();
 // aiven ca certificate
 const caCertificate = fs.readFileSync("./certs/ca.pem").toString();
 
-const sequelize = new Sequelize(
-  process.env.DB_NAME,
-  process.env.DB_USER,
-  process.env.DB_PASSWORD,
-  {
-    host: process.env.DB_HOST,
-    port: process.env.DB_PORT,
-    dialect: "mysql",
-    dialectOptions: {
-      ssl: {
-        require: true,
-        rejectUnauthorized: true,
-        ca: caCertificate, // Ensure only valid certificates are used
-      },
-    },
-  }
-);
+const sequelize = new Sequelize(process.env.CONNECTION_STRING, {
+  dialect: "mysql",
+  logging: false, // optional: disables SQL logging
+});
 
 async function connect() {
   try {
